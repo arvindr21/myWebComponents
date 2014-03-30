@@ -1,12 +1,9 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html> 
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Polymer WebApp</title>
+        <title>Web Components - Mega Menu tag</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -16,8 +13,7 @@
         <!-- Place your HTML imports here -->
         <script src="../app/bower_components/platform/platform.js"></script>
 
-        
-        
+    
     </head>
     <body><polymer-element name="polymer-body" extends="body" assetpath="../app/bower_components/polymer/">
 
@@ -62,7 +58,7 @@
 
 
 
-<polymer-element name="polymer-list" attributes="" assetpath="../app/elements/">
+<polymer-element name="mega-menu" attributes="" assetpath="../app/elements/">
   <template>
     <style>
       /* styles for the custom element itself - lowest specificity */
@@ -71,60 +67,122 @@
       style if an ancestor has the different class
       :host(.different) { } 
       */
-    </style>
-    <ul>
-      <template id="greeting" repeat="{{ item in items }}">
-        <li>{{ item }}</li>
-      </template>
-    </ul>
-  </template>
-  <script>
-    Polymer('polymer-list', {
-      ready: function() {
-        this.items = [
-          'HTML5 Boilerplate',
-          'Web Component Polyfills',
-          'Polymer'
-        ];
+       ul {
+        text-align: center;
+        display: block;
+        margin: 0 auto;
+        padding: 15px 4px 17px 0;
+        list-style: none;
+        -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+        -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
       }
-    });
-  </script>
-</polymer-element>
+      ul li {
+        font: bold 12px/18px sans-serif;
+        display: inline-block;
+        margin-right: -4px;
+        position: relative;
+        padding: 15px 20px;
+        background: #fff;
+        cursor: pointer;
+        -webkit-transition: all 0.2s;
+        -moz-transition: all 0.2s;
+        -ms-transition: all 0.2s;
+        -o-transition: all 0.2s;
+        transition: all 0.2s;
+      }
 
+      ul li:hover {
+        background: #eee;
+        color: #fff;
+      }
 
-<polymer-element name="polymer-greeting" attributes="" assetpath="../app/elements/">
-  <template>
-    <style>
-      /* styles for the custom element itself - lowest specificity */
-      :host { display: block; }
-      /* 
-      style if an ancestor has the different class
-      :host(.different) { } 
-      */
+      ul li ul {
+        padding: 0;
+        position: absolute;
+        top: 48px;
+        left: 0;
+        width: 150px;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        display: none;
+        opacity: 0;
+        visibility: hidden;
+        -webkit-transiton: opacity 0.2s;
+        -moz-transition: opacity 0.2s;
+        -ms-transition: opacity 0.2s;
+        -o-transition: opacity 0.2s;
+        -transition: opacity 0.2s;
+      }
+
+      ul li ul li { 
+        background: #eee; 
+        display: block; 
+        color: #fff;
+        text-shadow: 0 -1px 0 #000;
+      }
+      a
+      {
+        text-decoration: none;  
+        font-weight: normal;
+        color: #000;
+      }
+      ul li ul li:hover { background: #ccc; }
+      ul li:hover ul {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+      }
+
     </style>
-    <h1>{{ greeting }}, {{ greeting }}!</h1>
-    <span>Update text to change the greeting.</span>
-    <input type="text" value="{{ greeting }}">
+    <ul id="wrapper"></ul>
   </template>
   <script>
-    Polymer('polymer-greeting', {
-      greeting : '\'Allo'
+    Polymer('mega-menu', {
+      //applyAuthorStyles: true,
+      //resetStyleInheritance: true,
+
+      // element is fully prepared
+      ready: function(){ 
+        var html = "";
+        var parents = document.querySelectorAll("mega-menu > span");
+        for (var i = 0; i < parents.length; i++) {
+          html += "<li><a href='"+(parents[i].attributes[0].value)+"'>"+(parents[i].attributes[1].value)+"</a>";
+          html += "<ul>";
+            for (var j = 0; j < parents[i].children.length; j++) {
+                  var c = parents[i].children[j];
+                  html += "<li><a href='"+(c.attributes[0].value)+"'>"+(c.attributes[1].value)+"</a></li>";
+            };
+            html += "</ul>";
+          html += "</li>";
+        };
+        this.$.wrapper.innerHTML = html;
+      },
+      // instance of the element is created
+      created: function() { },
+      // instance was inserted into the document
+      enteredView: function() { },
+      // instance was removed from the document
+      leftView: function() { },
+      // attribute added, removed or updated
+      attributeChanged: function(attrName, oldVal, newVal) { }
     });
   </script>
 </polymer-element>
-
-        
-        <div class="hero-unit">
-          <polymer-greeting></polymer-greeting>
-          <p>You now have</p>
-          <polymer-list><polymer-list>
-        </polymer-list></polymer-list></div>
-        
-
-      <script>
-        document.addEventListener('WebComponentsReady', function() {
-            // Perform some behaviour
-        });
-      </script>
+         <mega-menu>
+            <span link="/home" name="Home">Home</span>
+            <span link="/products" name="Products">
+                <li link="/prod1" name="Product 1"></li>
+                <li link="/prod2" name="Product 2"></li>
+                <li link="/prod3" name="Product 3"></li>
+                <li link="/prod4" name="Product 4"></li>
+                <li link="/prod5" name="Product 5"></li>
+            </span>
+            <span link="/contact" name="Contact">
+                <li link="/phone" name="Phone"></li>
+                <li link="/email" name="Email"></li>
+            </span>
+        </mega-menu>
     </body>
 </html>
