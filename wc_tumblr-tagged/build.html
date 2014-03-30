@@ -1,0 +1,221 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Tumblr Tag</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="../app/styles/main.css">
+
+        <!-- Place your HTML imports here -->       
+        <script type="text/javascript" src="../app/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="../app/bower_components/platform/platform.js"></script>
+
+        
+    
+
+    </head>
+    <body><polymer-element name="polymer-body" extends="body" assetpath="../app/bower_components/polymer/">
+
+  <script>
+
+  // upgrade polymer-body last so that it can contain other imported elements
+  document.addEventListener('polymer-ready', function() {
+    
+    Polymer('polymer-body', Platform.mixin({
+
+      created: function() {
+        this.template = document.createElement('template');
+        var body = wrap(document).body;
+        var c$ = body.childNodes.array();
+        for (var i=0, c; (c=c$[i]); i++) {
+          if (c.localName !== 'script') {
+            this.template.content.appendChild(c);
+          }
+        }
+        // snarf up user defined model
+        window.model = this;
+      },
+
+      parseDeclaration: function(elementElement) {
+        this.lightFromTemplate(this.template);
+      }
+
+    }, window.model));
+
+  });
+
+  </script>
+
+</polymer-element>
+<!--
+ Copyright 2013 The Polymer Authors. All rights reserved.
+ Use of this source code is governed by a BSD-style
+ license that can be found in the LICENSE file.
+-->
+<script src="../app/bower_components/polymer/polymer.js"></script>
+<!-- <link rel="import" href="../polymer-dev/polymer.html"> -->
+
+
+
+<polymer-element name="tumblr-tagged" attributes="" assetpath="../app/elements/">
+  <template>
+    <style>
+      /* styles for the custom element itself - lowest specificity */
+      :host { display: block; }
+      /* 
+      style if an ancestor has the different class
+      :host(.different) { } 
+      */
+      #wrapper {
+        width: 90%;
+        max-width: 1100px;
+        min-width: 800px;
+        margin: 50px auto;
+      }
+
+      .pin {
+        display: inline-block;
+        background: #FEFEFE;
+        border: 2px solid #FAFAFA;
+        box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+        margin: 0 2px 15px;
+        -webkit-column-break-inside: avoid;
+        -moz-column-break-inside: avoid;
+        column-break-inside: avoid;
+        padding: 15px;
+        padding-bottom: 5px;
+        background: -webkit-linear-gradient(45deg, #FFF, #F9F9F9);
+        opacity: 1;
+        
+        -webkit-transition: all .2s ease;
+        -moz-transition: all .2s ease;
+        -o-transition: all .2s ease;
+        transition: all .2s ease;
+      }
+
+      .pin img {
+        width: 100%;
+        padding-bottom: 15px;
+        margin-bottom: 5px;
+      }
+
+      #columns {
+          -webkit-column-count: 2;
+          -moz-column-count: 2;
+          column-count: 2;
+      }
+
+      .button {
+        display: inline-block;
+        margin-bottom: 0;
+        font-weight: 400;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        border-radius: 4px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        color: #fff;
+        background-color: #428bca;
+        border-color: #357ebd
+    }
+
+    .center {
+        text-align: center
+    }
+     #search {
+      display: block;
+      text-transform:uppercase;
+      width: 100%;
+      height: 34px;
+      padding: 6px 12px;
+      font-size: 14px;
+      line-height: 1.42857143;
+      color: rgb(85, 85, 85);
+      background-color: rgb(255, 255, 255);
+      background-image: none;
+      border: 1px solid rgb(204, 204, 204);
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      border-bottom-left-radius: 4px;
+      -webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px inset;
+      box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px inset;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      -webkit-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    </style>
+    <input type="text" id="search" placeholder="Search Tumblr" value="clouds" on-keyup="{{fetchData}}">
+    <div id="tumblrTagged">
+      <h3 class="center">Loading..</h3>
+    </div>
+  </template>
+  <script>
+    Polymer('tumblr-tagged', {
+      //applyAuthorStyles: true,
+      //resetStyleInheritance: true,
+      fetchData :function  (args) {
+        var that = this,
+        timer;
+        srch = that.$.search.value;
+
+        if (srch.length > 2) {
+            if (timer){
+                clearTimeout(timer);
+            }
+            timer = setTimeout(function(){
+                that.ajax(srch);
+            }, 999);
+          }
+      },
+      ajax : function (srch) {
+        var that = this;
+        that.$.tumblrTagged.innerHTML = '<h3 class="center">Loading..</h3>';
+            $.ajax({
+              url: 'http://api.tumblr.com/v2/tagged?tag='+srch,
+              method: 'get',
+              data : ({
+                api_key :'6Pz0hVaVeH7vbtrhmgrK1WkaQe74NDXo7zdnW47IXtxX12yMAK'
+              }),
+              dataType: "jsonp",
+              success : function (data) {
+                that.handleResp(data.response);
+              }
+            });      
+      },
+      handleResp : function  (resp) {
+          var html = '<div id="wrapper"><div id="columns">';
+          for (var i = resp.length - 1; i >= 0; i--) {
+                 var src = resp[i].photos ? resp[i].photos[0].original_size.url : null;
+                  if(src !== null)
+                  html += '<div class="pin"><img src="'+src+'" /></div>';
+          };
+          html += "</div></div>";
+          this.$.tumblrTagged.innerHTML = html
+      }
+    });
+  </script>
+</polymer-element>
+       <div class="hero-unit">
+       <h2>Tumblr Tagged Search</h2>
+         <tumblr-tagged>
+         <script type="text/javascript">
+            document.addEventListener('WebComponentsReady', function() {
+                var tumblrTagged = $("tumblr-tagged")[0];
+                tumblrTagged.fetchData();
+            });        
+        </script>
+       </tumblr-tagged></div>
+    </body>
+</html>

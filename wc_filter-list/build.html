@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>My filter-list WebComponent</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="../app/styles/main.css">
+
+        <!-- Place your HTML imports here -->
+        <script src="../app/bower_components/platform/platform.js"></script>
+
+    
+    </head>
+    <body><polymer-element name="polymer-body" extends="body" assetpath="../app/bower_components/polymer/">
+
+  <script>
+
+  // upgrade polymer-body last so that it can contain other imported elements
+  document.addEventListener('polymer-ready', function() {
+    
+    Polymer('polymer-body', Platform.mixin({
+
+      created: function() {
+        this.template = document.createElement('template');
+        var body = wrap(document).body;
+        var c$ = body.childNodes.array();
+        for (var i=0, c; (c=c$[i]); i++) {
+          if (c.localName !== 'script') {
+            this.template.content.appendChild(c);
+          }
+        }
+        // snarf up user defined model
+        window.model = this;
+      },
+
+      parseDeclaration: function(elementElement) {
+        this.lightFromTemplate(this.template);
+      }
+
+    }, window.model));
+
+  });
+
+  </script>
+
+</polymer-element>
+<!--
+ Copyright 2013 The Polymer Authors. All rights reserved.
+ Use of this source code is governed by a BSD-style
+ license that can be found in the LICENSE file.
+-->
+<script src="../app/bower_components/polymer/polymer.js"></script>
+<!-- <link rel="import" href="../polymer-dev/polymer.html"> -->
+
+
+
+<polymer-element name="filter-list" attributes="data" assetpath="../app/elements/">
+  <template>
+    <style>
+      /* styles for the custom element itself - lowest specificity */
+      :host { display: block; }
+      /* 
+      style if an ancestor has the different class
+      :host(.different) { } 
+      */
+      ul
+      {
+        padding-left: 9px;
+      }
+      li
+      {
+        display: block;
+      }
+      #search {
+        display: block;
+        width: 100%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        }
+
+    </style>
+    <input type="text" placeholder="Search List" id="search" on-keyup="{{filterData}}">
+    <ul id="fl_wrapper">
+      <template repeat="{{ item in data }}">
+        <li>{{ item }}</li>
+      </template>
+    </ul>
+  </template>
+  <script>
+    Polymer('filter-list', {
+      //applyAuthorStyles: true,
+      //resetStyleInheritance: true,
+      data : [],
+      filterData : function (argument) {
+        var sText = this.$.search.value;
+        for (var i = this.$.fl_wrapper.children.length - 1; i >= 0; i--) {
+          
+          var child = this.$.fl_wrapper.children[i];
+
+          if(child.tagName.toLowerCase !== "template")
+          {
+              var fText = child.textContent || child.innerText;
+              if(fText.indexOf(sText) >= 0 )
+              {
+                  child.style.display = "block";
+              }
+              else
+              {
+                child.style.display = "none";
+              }
+          }
+        };
+
+      },
+      // element is fully prepared
+      ready: function(){ },
+      // instance of the element is created
+      created: function() { },
+      // instance was inserted into the document
+      enteredView: function() { },
+      // instance was removed from the document
+      leftView: function() { },
+      // attribute added, removed or updated
+      attributeChanged: function(attrName, oldVal, newVal) { }
+    });
+  </script>
+</polymer-element>
+    <div class="hero-unit">
+          <filter-list data="[&apos;one&apos;,&apos;two&apos;,&apos;three&apos;]"></filter-list>
+    </div>
+    <h3 class="center">Go Ahead, View Source of this page!</h3>
+    <div class="center">Did you see the <pre>filter-list</pre> tag? and the <pre>data</pre> attribute?</div>
+    <h3 class="center">Cool Right?</h3>
+
+    </body>
+</html>
