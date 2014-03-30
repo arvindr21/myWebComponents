@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Tumblr Tag</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="styles/main.css">
+
+        <!-- Place your HTML imports here -->       
+        <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/platform/platform.js"></script>
+        
+    <link rel="import" href="elements/tumblr-tagged.html">
+
+    </head>
+    <body>
+       <div class="hero-unit">
+       <h2>Tumblr Tagged Search</h2>
+         <tumblr-tagged></polymer-tumblr-tagged>
+         <script type="text/javascript">
+            document.addEventListener('WebComponentsReady', function() {
+                var tumblrTagged = $("tumblr-tagged")[0];
+                tumblrTagged.fetchData();
+            });        
+        </script>
+       </div>
+    </body>
+</html>
