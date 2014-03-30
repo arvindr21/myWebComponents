@@ -1,0 +1,130 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Polymer WebApp</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="styles/main.css">
+
+        <!-- Place your HTML imports here -->
+        <script src="../app/bower_components/platform/platform.js"></script>
+
+        
+        
+    </head>
+    <body><polymer-element name="polymer-body" extends="body" assetpath="../app/bower_components/polymer/">
+
+  <script>
+
+  // upgrade polymer-body last so that it can contain other imported elements
+  document.addEventListener('polymer-ready', function() {
+    
+    Polymer('polymer-body', Platform.mixin({
+
+      created: function() {
+        this.template = document.createElement('template');
+        var body = wrap(document).body;
+        var c$ = body.childNodes.array();
+        for (var i=0, c; (c=c$[i]); i++) {
+          if (c.localName !== 'script') {
+            this.template.content.appendChild(c);
+          }
+        }
+        // snarf up user defined model
+        window.model = this;
+      },
+
+      parseDeclaration: function(elementElement) {
+        this.lightFromTemplate(this.template);
+      }
+
+    }, window.model));
+
+  });
+
+  </script>
+
+</polymer-element>
+<!--
+ Copyright 2013 The Polymer Authors. All rights reserved.
+ Use of this source code is governed by a BSD-style
+ license that can be found in the LICENSE file.
+-->
+<script src="../app/bower_components/polymer/polymer.js"></script>
+<!-- <link rel="import" href="../polymer-dev/polymer.html"> -->
+
+
+
+<polymer-element name="polymer-list" attributes="" assetpath="../app/elements/">
+  <template>
+    <style>
+      /* styles for the custom element itself - lowest specificity */
+      :host { display: block; }
+      /* 
+      style if an ancestor has the different class
+      :host(.different) { } 
+      */
+    </style>
+    <ul>
+      <template id="greeting" repeat="{{ item in items }}">
+        <li>{{ item }}</li>
+      </template>
+    </ul>
+  </template>
+  <script>
+    Polymer('polymer-list', {
+      ready: function() {
+        this.items = [
+          'HTML5 Boilerplate',
+          'Web Component Polyfills',
+          'Polymer'
+        ];
+      }
+    });
+  </script>
+</polymer-element>
+
+
+<polymer-element name="polymer-greeting" attributes="" assetpath="../app/elements/">
+  <template>
+    <style>
+      /* styles for the custom element itself - lowest specificity */
+      :host { display: block; }
+      /* 
+      style if an ancestor has the different class
+      :host(.different) { } 
+      */
+    </style>
+    <h1>{{ greeting }}, {{ greeting }}!</h1>
+    <span>Update text to change the greeting.</span>
+    <input type="text" value="{{ greeting }}">
+  </template>
+  <script>
+    Polymer('polymer-greeting', {
+      greeting : '\'Allo'
+    });
+  </script>
+</polymer-element>
+
+        
+        <div class="hero-unit">
+          <polymer-greeting></polymer-greeting>
+          <p>You now have</p>
+          <polymer-list><polymer-list>
+        </polymer-list></polymer-list></div>
+        
+
+      <script>
+        document.addEventListener('WebComponentsReady', function() {
+            // Perform some behaviour
+        });
+      </script>
+    </body>
+</html>
