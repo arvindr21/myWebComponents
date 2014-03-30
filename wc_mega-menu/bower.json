@@ -1,0 +1,9 @@
+{
+  "name": "hellopolymer",
+  "version": "0.0.0",
+  "dependencies": {
+    "platform": "Polymer/platform#master",
+    "polymer": "Polymer/polymer#master"
+  },
+  "devDependencies": {}
+}

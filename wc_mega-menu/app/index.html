@@ -1,0 +1,35 @@
+<!doctype html>
+<html> 
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Web Components - Mega Menu tag</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <!-- build:css styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- endbuild-->
+
+        <!-- Place your HTML imports here -->
+        <script src="bower_components/platform/platform.js"></script>
+    <link rel="import" href="elements/mega-menu.html">
+    </head>
+    <body>
+         <mega-menu>
+            <span link="/home" name="Home">Home</span>
+            <span link="/products" name="Products">
+                <li link="/prod1" name="Product 1"></li>
+                <li link="/prod2" name="Product 2"></li>
+                <li link="/prod3" name="Product 3"></li>
+                <li link="/prod4" name="Product 4"></li>
+                <li link="/prod5" name="Product 5"></li>
+            </span>
+            <span link="/contact" name="Contact">
+                <li link="/phone" name="Phone"></li>
+                <li link="/email" name="Email"></li>
+            </span>
+        </mega-menu>
+    </body>
+</html>

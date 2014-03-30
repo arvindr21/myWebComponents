@@ -1,0 +1,114 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="mega-menu"  attributes="">
+  <template>
+    <style>
+      /* styles for the custom element itself - lowest specificity */
+      :host { display: block; }
+      /* 
+      style if an ancestor has the different class
+      :host(.different) { } 
+      */
+       ul {
+        text-align: center;
+        display: block;
+        margin: 0 auto;
+        padding: 15px 4px 17px 0;
+        list-style: none;
+        -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+        -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+      }
+      ul li {
+        font: bold 12px/18px sans-serif;
+        display: inline-block;
+        margin-right: -4px;
+        position: relative;
+        padding: 15px 20px;
+        background: #fff;
+        cursor: pointer;
+        -webkit-transition: all 0.2s;
+        -moz-transition: all 0.2s;
+        -ms-transition: all 0.2s;
+        -o-transition: all 0.2s;
+        transition: all 0.2s;
+      }
+
+      ul li:hover {
+        background: #eee;
+        color: #fff;
+      }
+
+      ul li ul {
+        padding: 0;
+        position: absolute;
+        top: 48px;
+        left: 0;
+        width: 150px;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        display: none;
+        opacity: 0;
+        visibility: hidden;
+        -webkit-transiton: opacity 0.2s;
+        -moz-transition: opacity 0.2s;
+        -ms-transition: opacity 0.2s;
+        -o-transition: opacity 0.2s;
+        -transition: opacity 0.2s;
+      }
+
+      ul li ul li { 
+        background: #eee; 
+        display: block; 
+        color: #fff;
+        text-shadow: 0 -1px 0 #000;
+      }
+      a
+      {
+        text-decoration: none;  
+        font-weight: normal;
+        color: #000;
+      }
+      ul li ul li:hover { background: #ccc; }
+      ul li:hover ul {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+      }
+
+    </style>
+    <ul id="wrapper"></ul>
+  </template>
+  <script>
+    Polymer('mega-menu', {
+      //applyAuthorStyles: true,
+      //resetStyleInheritance: true,
+
+      // element is fully prepared
+      ready: function(){ 
+        var html = "";
+        var parents = document.querySelectorAll("mega-menu > span");
+        for (var i = 0; i < parents.length; i++) {
+          html += "<li><a href='"+(parents[i].attributes[0].value)+"'>"+(parents[i].attributes[1].value)+"</a>";
+          html += "<ul>";
+            for (var j = 0; j < parents[i].children.length; j++) {
+                  var c = parents[i].children[j];
+                  html += "<li><a href='"+(c.attributes[0].value)+"'>"+(c.attributes[1].value)+"</a></li>";
+            };
+            html += "</ul>";
+          html += "</li>";
+        };
+        this.$.wrapper.innerHTML = html;
+      },
+      // instance of the element is created
+      created: function() { },
+      // instance was inserted into the document
+      enteredView: function() { },
+      // instance was removed from the document
+      leftView: function() { },
+      // attribute added, removed or updated
+      attributeChanged: function(attrName, oldVal, newVal) { }
+    });
+  </script>
+</polymer-element>
