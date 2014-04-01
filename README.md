@@ -5,9 +5,9 @@ Tutorial : http://thejackalofjavascript.com/web-components-future-web/
 
 Demo
 ----
-Filter List : http://arvindr21.github.io/myWebComponents/wc_filter-list/
-Tumblr Tagged : http://arvindr21.github.io/myWebComponents/wc_tumblr-tagged/
-Mega Menu : http://arvindr21.github.io/myWebComponents/wc_mega-menu/
+* Filter List : http://arvindr21.github.io/myWebComponents/wc_filter-list/
+* Tumblr Tagged : http://arvindr21.github.io/myWebComponents/wc_tumblr-tagged/
+* Mega Menu : http://arvindr21.github.io/myWebComponents/wc_mega-menu/
 
 
 Install
