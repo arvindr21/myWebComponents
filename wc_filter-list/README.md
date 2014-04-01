@@ -10,6 +10,6 @@ Demo
 Install
 -------
 
-1. Download the required component
+1. Download the component
 2. execute ```npm install && bower install``` to install dependencies
-3. run ```grunt server``` to run the app
+3. execute ```grunt server``` to run the app
