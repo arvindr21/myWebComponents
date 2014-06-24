@@ -15,4 +15,4 @@ Install
 2. execute ```npm install && bower install``` to install dependencies
 3. execute ```grunt server``` to run the app
 
-PS : This tag has jQuery as hard dependency.
+PS : jQuery is a hard dependency for this tag.
