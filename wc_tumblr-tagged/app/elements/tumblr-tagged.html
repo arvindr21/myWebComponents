@@ -105,6 +105,9 @@
     Polymer('tumblr-tagged', {
       //applyAuthorStyles: true,
       //resetStyleInheritance: true,
+      ready: function(){ 
+        this.fetchData();
+      },
       fetchData :function  (args) {
         var that = this,
         timer;
