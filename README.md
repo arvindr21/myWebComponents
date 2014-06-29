@@ -16,9 +16,9 @@ Demo
 Install
 -------
 For Filter List, Tumblr Tagged and Mega Menu tags follow the below steps
-1. Download the required component
-2. execute ```npm install && bower install``` to install dependencies
-3. execute ```grunt server``` to run the app
+* Download the required component
+* execute ```npm install && bower install``` to install dependencies
+* execute ```grunt server``` to run the app
 
 For the rest of the tags, refer their respective repos
 * upper case : https://github.com/arvindr21/upper-case
